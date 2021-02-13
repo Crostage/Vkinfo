@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import static com.crostage.myapplication.utils.NetworkUtils.generateUrl;
 
 public class MainActivity extends AppCompatActivity {
+
     private EditText searchField;
     private Button searchButton;
     private TextView result;
@@ -26,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickSearch(View view) {
-        Editable text = searchField.getText();
-        result.setText(text);
+        String text = searchField.getText().toString();
+        result.setText(generateUrl(text).toString());
+
     }
 }
