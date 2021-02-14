@@ -1,14 +1,21 @@
 package com.crostage.myapplication.utils;
 
 import android.net.Uri;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 public class NetworkUtils {
 
@@ -32,18 +39,30 @@ public class NetworkUtils {
             e.printStackTrace();
         }
 
+
+        Log.i("URL","URL = "+url);
         return url;
     }
 
     public static String getResponseFromURL(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try (InputStream is = urlConnection.getInputStream();
-             BufferedReader reader = new BufferedReader(new InputStreamReader(is))){
+             BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
 
-            return reader.readLine();
+            String response = reader.readLine();
+
+            Log.i("response", "response = " + response);
+            return response;
+        } catch (UnknownHostException e) {
+                e.printStackTrace();
+                return null;
         } finally {
             urlConnection.disconnect();
         }
     }
+
+
+
+
 
 }
