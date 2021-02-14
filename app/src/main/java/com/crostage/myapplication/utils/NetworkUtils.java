@@ -2,6 +2,11 @@ package com.crostage.myapplication.utils;
 
 import android.net.Uri;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -27,4 +32,16 @@ public class NetworkUtils {
 
         return url;
     }
+
+    public static String getResponseFromURL(URL url) throws IOException {
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        try (InputStream is = urlConnection.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(is))){
+
+            return reader.readLine();
+        } finally {
+            urlConnection.disconnect();
+        }
+    }
+
 }
